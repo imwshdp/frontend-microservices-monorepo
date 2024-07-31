@@ -11,9 +11,9 @@ export function removeDataTestIdBabelPlugin(): PluginItem {
 						if (forbiddenProps.includes(nodeName)) {
 							current.parentPath.remove();
 						}
-					}
+					},
 				});
-			}
-		}
+			},
+		},
 	};
 }

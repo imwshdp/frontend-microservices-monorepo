@@ -5,7 +5,7 @@ import styles from './Shop.module.scss';
 function Shop() {
 	return (
 		<div className={styles.wrapper}>
-			<h1>Shop Lazy Page</h1>
+			<h2>Shop Lazy Page</h2>
 		</div>
 	);
 }

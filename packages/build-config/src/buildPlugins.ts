@@ -18,17 +18,17 @@ export function buildPlugins({ mode, paths, analyzer, platform }: BuildOptions):
 	const plugins: Configuration['plugins'] = [
 		new HtmlWebpackPlugin({
 			template: paths.html,
-			favicon: path.resolve(paths.public, 'favicon.ico')
+			favicon: path.resolve(paths.public, 'favicon.ico'),
 		}),
 		new DefinePlugin({
 			__PLATFORM__: JSON.stringify(platform),
-			__ENV__: JSON.stringify(mode)
-		})
+			__ENV__: JSON.stringify(mode),
+		}),
 	];
 
 	if (isDev) {
 		plugins.push(new webpack.ProgressPlugin());
-		plugins.push(new ForkTsCheckerWebpackPlugin());
+		// plugins.push(new ForkTsCheckerWebpackPlugin());
 		plugins.push(new ReactRefreshWebpackPlugin());
 	}
 
@@ -36,14 +36,19 @@ export function buildPlugins({ mode, paths, analyzer, platform }: BuildOptions):
 		plugins.push(
 			new MiniCssExtractPlugin({
 				filename: 'styles/[name].[contenthash:8].css',
-				chunkFilename: 'styles/[name].[contenthash:8].css'
-			})
+				chunkFilename: 'styles/[name].[contenthash:8].css',
+			}),
 		);
 
 		plugins.push(
 			new CopyPlugin({
-				patterns: [{ from: path.resolve(paths.public, 'locales'), to: path.resolve(paths.output, 'locales') }]
-			})
+				patterns: [
+					{
+						from: path.resolve(paths.public, 'locales'),
+						to: path.resolve(paths.output, 'locales'),
+					},
+				],
+			}),
 		);
 	}
 

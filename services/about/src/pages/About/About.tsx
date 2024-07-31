@@ -9,7 +9,7 @@ import styles from './About.module.scss';
 function About() {
 	return (
 		<div className={styles.wrapper}>
-			<h1>About Lazy Page</h1>
+			<h2>About Lazy Page</h2>
 			<div className={styles.images}>
 				<figure>
 					<img src={ReactPng} alt='react logo' width={100} />

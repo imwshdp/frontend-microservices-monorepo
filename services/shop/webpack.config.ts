@@ -13,13 +13,13 @@ interface EnvVariablesType {
 	platform?: BuildPlatform;
 }
 
-export default (env: EnvVariablesType) => {
+export default async (env: EnvVariablesType) => {
 	const paths: BuildPaths = {
 		entry: path.resolve(__dirname, 'src', 'index.tsx'),
 		html: path.resolve(__dirname, 'public', 'index.html'),
 		output: path.resolve(__dirname, 'build'),
 		src: path.resolve(__dirname, 'src'),
-		public: path.resolve(__dirname, 'public')
+		public: path.resolve(__dirname, 'public'),
 	};
 
 	const config: webpack.Configuration = buildWebpack({
@@ -27,7 +27,8 @@ export default (env: EnvVariablesType) => {
 		paths,
 		port: env.port ?? 3001,
 		analyzer: env.analyzer ?? false,
-		platform: env.platform ?? 'desktop'
+		platform: env.platform ?? 'desktop',
+		open: ['/shop'],
 	});
 
 	config.plugins.push(
@@ -35,24 +36,24 @@ export default (env: EnvVariablesType) => {
 			name: 'shop',
 			filename: 'remoteEntry.js',
 			exposes: {
-				'./router': './src/router/index.ts'
+				'./app': './src/app/App.tsx',
 			},
 			shared: {
 				...packageJson.dependencies,
 				react: {
+					requiredVersion: packageJson.dependencies['react'],
 					eager: true,
-					requiredVersion: packageJson.dependencies['react']
 				},
 				'react-router-dom': {
+					requiredVersion: packageJson.dependencies['react-router-dom'],
 					eager: true,
-					requiredVersion: packageJson.dependencies['react-router-dom']
 				},
 				'react-dom': {
+					requiredVersion: packageJson.dependencies['react-dom'],
 					eager: true,
-					requiredVersion: packageJson.dependencies['react-dom']
-				}
-			}
-		})
+				},
+			},
+		}),
 	);
 
 	return config;

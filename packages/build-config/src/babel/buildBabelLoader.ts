@@ -11,8 +11,8 @@ export function buildBabelLoader({ mode }: BuildOptions) {
 		plugins.push([
 			removeDataTestIdBabelPlugin,
 			{
-				props: ['data-testid']
-			}
+				props: ['data-testid'],
+			},
 		]);
 	}
 
@@ -27,12 +27,12 @@ export function buildBabelLoader({ mode }: BuildOptions) {
 					[
 						'@babel/preset-react',
 						{
-							runtime: isDev ? 'automatic' : 'classic'
-						}
-					]
+							runtime: isDev ? 'automatic' : 'classic',
+						},
+					],
 				],
-				plugins: plugins.length ? plugins : undefined
-			}
-		}
+				plugins: plugins.length ? plugins : undefined,
+			},
+		},
 	};
 }

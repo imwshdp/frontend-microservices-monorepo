@@ -16,5 +16,5 @@ container.render(
 		<BrowserRouter basename='/about'>
 			<App />
 		</BrowserRouter>
-	</StrictMode>
+	</StrictMode>,
 );

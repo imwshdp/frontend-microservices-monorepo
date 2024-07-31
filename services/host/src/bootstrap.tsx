@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { StrictMode } from 'react';
 import { App } from './app';
 
@@ -15,5 +15,5 @@ container.render(
 		<BrowserRouter>
 			<App />
 		</BrowserRouter>
-	</StrictMode>
+	</StrictMode>,
 );

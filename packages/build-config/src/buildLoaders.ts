@@ -19,11 +19,11 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
 				options: {
 					transpileOnly: isDev,
 					getCustomTransformers: () => ({
-						before: [isDev && ReactRefreshTypeScript()].filter(Boolean)
-					})
-				}
-			}
-		]
+						before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
+					}),
+				},
+			},
+		],
 	};
 
 	const cssLoader = {
@@ -32,19 +32,19 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
 			modules: {
 				auto: (resPath: string) => Boolean(resPath.includes('.module.')),
 				namedExport: false,
-				localIdentName: isDev ? '[path][name]__[local]--[hash:base64:5]' : '[hash:base64:8]'
-			}
-		}
+				localIdentName: isDev ? '[path][name]__[local]--[hash:base64:5]' : '[hash:base64:8]',
+			},
+		},
 	};
 
 	const stylesLoader = {
 		test: /\.s[ac]ss$/i,
-		use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, cssLoader, 'sass-loader']
+		use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, cssLoader, 'sass-loader'],
 	};
 
 	const assetsLoader = {
 		test: /\.(png|jpg|jpeg|gif)$/i,
-		type: 'asset/resource'
+		type: 'asset/resource',
 	};
 
 	const svgrLoader = {
@@ -60,14 +60,14 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
 							{
 								name: 'convertColors',
 								params: {
-									currentColor: true
-								}
-							}
-						]
-					}
-				}
-			}
-		]
+									currentColor: true,
+								},
+							},
+						],
+					},
+				},
+			},
+		],
 	};
 
 	return [
@@ -75,6 +75,6 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
 		tsLoader,
 		stylesLoader,
 		assetsLoader,
-		svgrLoader
+		svgrLoader,
 	];
 }

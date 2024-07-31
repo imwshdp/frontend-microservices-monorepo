@@ -13,17 +13,17 @@ export function buildWebpack(options: BuildOptions): webpack.Configuration {
 
 	return {
 		mode: mode ?? 'development',
-
 		entry: paths.entry,
 		output: {
 			path: paths.output,
 			filename: '[name].[contenthash].js',
-			clean: true
+			chunkFilename: 'js/[id].[contenthash].js',
+			clean: true,
 		},
 
 		resolve: buildResolvers(options),
 		module: {
-			rules: buildLoaders(options)
+			rules: buildLoaders(options),
 		},
 
 		plugins: buildPlugins(options),
@@ -32,7 +32,8 @@ export function buildWebpack(options: BuildOptions): webpack.Configuration {
 		devServer: isDev ? buildDevServer(options) : undefined,
 
 		optimization: {
-			splitChunks: false
-		}
+			minimize: false,
+			// splitChunks: false
+		},
 	};
 }

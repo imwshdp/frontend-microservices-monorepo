@@ -13,13 +13,13 @@ interface EnvVariablesType {
 	platform?: BuildPlatform;
 }
 
-export default (env: EnvVariablesType) => {
+export default async (env: EnvVariablesType) => {
 	const paths: BuildPaths = {
 		entry: path.resolve(__dirname, 'src', 'index.tsx'),
 		html: path.resolve(__dirname, 'public', 'index.html'),
 		output: path.resolve(__dirname, 'build'),
 		src: path.resolve(__dirname, 'src'),
-		public: path.resolve(__dirname, 'public')
+		public: path.resolve(__dirname, 'public'),
 	};
 
 	const config: webpack.Configuration = buildWebpack({
@@ -28,35 +28,32 @@ export default (env: EnvVariablesType) => {
 		port: env.port ?? 3002,
 		analyzer: env.analyzer ?? false,
 		platform: env.platform ?? 'desktop',
-		open: ['/about']
+		open: ['/about'],
 	});
 
 	config.plugins.push(
 		new webpack.container.ModuleFederationPlugin({
-			name: 'AboutApp',
+			name: 'about',
 			filename: 'remoteEntry.js',
 			exposes: {
-				'./AboutApp': './src/app/index.ts'
+				'./app': './src/app/App.tsx',
 			},
 			shared: {
 				...packageJson.dependencies,
 				react: {
 					requiredVersion: packageJson.dependencies['react'],
 					eager: true,
-					singleton: true
 				},
 				'react-router-dom': {
 					requiredVersion: packageJson.dependencies['react-router-dom'],
 					eager: true,
-					singleton: true
 				},
 				'react-dom': {
 					requiredVersion: packageJson.dependencies['react-dom'],
 					eager: true,
-					singleton: true
-				}
-			}
-		})
+				},
+			},
+		}),
 	);
 
 	return config;

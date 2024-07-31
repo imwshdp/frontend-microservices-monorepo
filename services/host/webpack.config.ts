@@ -15,13 +15,13 @@ interface EnvVariablesType {
 	ABOUT_REMOTE_URL?: string;
 }
 
-export default (env: EnvVariablesType) => {
+export default async (env: EnvVariablesType) => {
 	const paths: BuildPaths = {
 		entry: path.resolve(__dirname, 'src', 'index.tsx'),
 		html: path.resolve(__dirname, 'public', 'index.html'),
 		output: path.resolve(__dirname, 'build'),
 		src: path.resolve(__dirname, 'src'),
-		public: path.resolve(__dirname, 'public')
+		public: path.resolve(__dirname, 'public'),
 	};
 
 	const config: webpack.Configuration = buildWebpack({
@@ -29,38 +29,34 @@ export default (env: EnvVariablesType) => {
 		paths,
 		port: env.port ?? 3000,
 		analyzer: env.analyzer ?? false,
-		platform: env.platform ?? 'desktop'
+		platform: env.platform ?? 'desktop',
+		open: ['/'],
 	});
 
-	const SHOP_REMOTE_URL = env.SHOP_REMOTE_URL ?? 'http://localhost/3001';
-	const ABOUT_REMOTE_URL = env.ABOUT_REMOTE_URL ?? 'http://localhost/3002';
+	const SHOP_REMOTE_URL = env.SHOP_REMOTE_URL ?? 'http://localhost:3001';
+	const ABOUT_REMOTE_URL = env.ABOUT_REMOTE_URL ?? 'http://localhost:3002';
 
 	config.plugins.push(
 		new webpack.container.ModuleFederationPlugin({
 			name: 'HostApp',
 			filename: 'remoteEntry.js',
 			remotes: {
-				remoteAboutApp: `AboutApp@${ABOUT_REMOTE_URL}/remoteEntry.js`
+				aboutService: `about@${ABOUT_REMOTE_URL}/remoteEntry.js`,
+				shopService: `shop@${SHOP_REMOTE_URL}/remoteEntry.js`,
 			},
 			shared: {
 				...packageJson.dependencies,
 				react: {
-					requiredVersion: packageJson.dependencies['react'],
 					eager: true,
-					singleton: true
 				},
 				'react-router-dom': {
-					requiredVersion: packageJson.dependencies['react-router-dom'],
 					eager: true,
-					singleton: true
 				},
 				'react-dom': {
-					requiredVersion: packageJson.dependencies['react-dom'],
 					eager: true,
-					singleton: true
-				}
-			}
-		})
+				},
+			},
+		}),
 	);
 
 	return config;

@@ -1,8 +1,16 @@
 {
 	"name": "frontend-microservices-monorepo",
 	"version": "1.0.0",
+	"private": true,
 	"workspaces": [
 		"packages/*",
 		"services/*"
-	]
+	],
+	"scripts": {
+		"lint": "npx eslint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+	"devDependencies": {
+		"prettier": "latest"
+	}
 }
