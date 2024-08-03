@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
+import { ROUTES } from '@packages/shared/src/routes';
 
 import styles from './App.module.scss';
 
@@ -13,13 +14,13 @@ const App = () => {
 		<div className={styles.container}>
 			<h1>HOST APPLICATION</h1>
 			<nav className={styles.nav}>
-				<Link className={styles.link} to='/about'>
+				<Link className={styles.link} to={ROUTES.about}>
 					About Microservice
 				</Link>
-				<Link className={styles.link} to='/shop'>
+				<Link className={styles.link} to={ROUTES.shop}>
 					Shop Microservice
 				</Link>
-				<Link className={styles.link} to='/'>
+				<Link className={styles.link} to={ROUTES.host}>
 					Host App
 				</Link>
 			</nav>
@@ -36,8 +37,8 @@ const App = () => {
 								</p>
 							}
 						/>
-						<Route path='/about/*' element={<AboutMicroservice />} />
-						<Route path='/shop/*' element={<ShopMicroservice />} />
+						<Route path={`/${ROUTES.about}/*`} element={<AboutMicroservice />} />
+						<Route path={`/${ROUTES.shop}/*`} element={<ShopMicroservice />} />
 					</Routes>
 				</Suspense>
 			</section>

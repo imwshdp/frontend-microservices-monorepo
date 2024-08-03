@@ -1,5 +1,5 @@
 {
-	"name": "@packages/build-config",
+	"name": "@packages/builder",
 	"version": "1.0.0",
 	"main": "./src/index.ts",
 	"devDependencies": {
@@ -34,3 +34,4 @@
 		"webpack-dev-server": "^5.0.4"
 	}
 }
+

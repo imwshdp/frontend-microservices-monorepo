@@ -1,6 +1,8 @@
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter, RouterProvider } from 'react-router-dom';
 import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { ROUTES } from '@packages/shared/src/routes';
+
 import { App } from './app';
 
 const root = document.getElementById('root');
@@ -12,7 +14,7 @@ const container = createRoot(root);
 
 container.render(
 	<StrictMode>
-		<BrowserRouter basename='/shop'>
+		<BrowserRouter basename={ROUTES.shop}>
 			<App />
 		</BrowserRouter>
 	</StrictMode>,

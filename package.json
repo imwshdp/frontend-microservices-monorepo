@@ -8,9 +8,11 @@
 	],
 	"scripts": {
 		"lint": "npx eslint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
-  },
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"preview": "concurrently \"cd services/about && npm run dev\" \"cd services/shop && npm run dev\" \"cd services/host && npm run dev\""
+	},
 	"devDependencies": {
 		"prettier": "latest"
 	}
 }
+
